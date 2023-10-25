@@ -2,7 +2,9 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { OrganizationSwitcher, SignOutButton, SignedIn } from '@clerk/nextjs'
+
 export default function Topbar() {
+
     return (
         <nav className='topbar'>
             <Link href="/" className='flex items-center gap-4'>
