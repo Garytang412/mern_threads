@@ -61,6 +61,8 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
             }
         }
         await updateUser(user.id, values.username, values.name, values.bio, values.profile_photo, pathName);
+        if (pathName === "/profile/edit") router.back();
+        else router.push("/");
     }
 
     const handleImage = (e: ChangeEvent<HTMLInputElement>, fieldChange: (value: string) => void) => {
