@@ -18,6 +18,8 @@ import Image from 'next/image';
 import { ChangeEvent, useState } from "react";
 import { isBase64Image } from "@/lib/utils";
 import { useUploadThing } from "@/lib/uploadthing";
+import { updateUser } from "@/lib/actions/user.actions";
+import { usePathname, useRouter } from "next/navigation";
 
 interface Props {
     user: {
@@ -35,6 +37,8 @@ interface Props {
 const AccountProfile = ({ user, btnTitle }: Props) => {
     const [files, setFiles] = useState<File[]>([]);
     const { startUpload } = useUploadThing("media");
+    const router = useRouter();
+    const pathName = usePathname();
 
     const form = useForm({
         resolver: zodResolver(UserValidation),
@@ -56,7 +60,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
                 values.profile_photo = imgRes[0].fileUrl;
             }
         }
-        //TODO: UPDATE USER PROFILE AFTER BACKEND DONE!
+        await updateUser(user.id, values.username, values.name, values.bio, values.profile_photo, pathName);
     }
 
     const handleImage = (e: ChangeEvent<HTMLInputElement>, fieldChange: (value: string) => void) => {
